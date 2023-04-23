@@ -38,6 +38,7 @@ public class VulnerableCallVisitor extends PsiRecursiveElementVisitor
       // Check if the method is vulnerable
       if (vulnerableMethods.contains(methodCall.resolveMethod().getName())) {
         // Highlight the method call
+        MethodHighlighterImpl.highlightMethodCall(methodCall, 7);
         System.out.println("found the method call");
         ;
       }

@@ -39,7 +39,7 @@ public class MethodHighlighterImpl
       EffectType.LINE_UNDERSCORE,
       Font.PLAIN);
   @Override
-  public void highlightMethodCall(final PsiMethodCallExpression expression, final Integer severity) {
+  public static void highlightMethodCall(final PsiMethodCallExpression expression, final Integer severity) {
     TextRange range = expression.getTextRange();
     Editor editor = FileEditorManager.getInstance(expression.getProject()).getSelectedTextEditor();
     if (editor != null) {
