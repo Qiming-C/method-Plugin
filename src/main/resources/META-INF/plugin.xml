@@ -24,14 +24,16 @@
   <depends>com.intellij.java</depends>
 
 
+  <extensions defaultExtensionNs="com.intellij">
+    <annotator implementationClass="com.example.methodplugin.JavaVulnerableMethodCallAnnotator" language="JAVA"/>
+  </extensions>
+
+
   <!-- Extension points defined by the plugin.
        Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
   <extensions defaultExtensionNs="com.intellij">
   </extensions>
 
   <actions>
-    <action id="MyAction" class="com.example.methodplugin.MyAction" text="MyAction" description="MyAction">
-      <add-to-group group-id="ToolsMenu" anchor="first"/>
-    </action>
   </actions>
 </idea-plugin>

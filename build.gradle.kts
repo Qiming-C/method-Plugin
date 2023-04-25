@@ -26,6 +26,8 @@ intellij {
     plugins.set(listOf("com.intellij.java"))
 }
 
+
+
 tasks {
     // Set the JVM compatibility versions
     withType<JavaCompile> {

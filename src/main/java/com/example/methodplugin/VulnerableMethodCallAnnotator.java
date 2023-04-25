@@ -1,24 +1,26 @@
 package com.example.methodplugin;
 
 import java.awt.*;
+import java.awt.font.TextAttribute;
+import java.util.List;
 
-import com.intellij.execution.application.ApplicationConfiguration;
+import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.lang.annotation.Annotator;
+import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
-import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.editor.markup.EffectType;
-import com.intellij.openapi.editor.markup.HighlighterLayer;
-import com.intellij.openapi.editor.markup.HighlighterTargetArea;
 import com.intellij.openapi.editor.markup.TextAttributes;
-import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.util.TextRange;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiMethodCallExpression;
 import com.intellij.ui.JBColor;
+import org.jetbrains.annotations.NotNull;
 
-
-public class MethodHighlighterImpl
-    implements MethodHighlighter
+public abstract class VulnerableMethodCallAnnotator implements Annotator
 {
-  private static final TextAttributes HighLightError = new TextAttributes(
+  public static final TextAttributes HighLightError = new TextAttributes(
       DefaultLanguageHighlighterColors.TEMPLATE_LANGUAGE_COLOR.getDefaultAttributes().getForegroundColor(),
       DefaultLanguageHighlighterColors.TEMPLATE_LANGUAGE_COLOR.getDefaultAttributes().getBackgroundColor(),
       JBColor.RED,
@@ -38,30 +40,5 @@ public class MethodHighlighterImpl
       JBColor.BLUE,
       EffectType.LINE_UNDERSCORE,
       Font.PLAIN);
-  @Override
-  public static void highlightMethodCall(final PsiMethodCallExpression expression, final Integer severity) {
-    TextRange range = expression.getTextRange();
-    Editor editor = FileEditorManager.getInstance(expression.getProject()).getSelectedTextEditor();
-    if (editor != null) {
-      TextAttributes textAttributes = checkMethodSeverityColor(severity);
-        if (textAttributes != null) {
-          editor.getMarkupModel().addRangeHighlighter(range.getStartOffset(), range.getEndOffset(), HighlighterLayer.ADDITIONAL_SYNTAX, textAttributes, HighlighterTargetArea.EXACT_RANGE);
-        }
-    }
 
-  }
-
-  private TextAttributes checkMethodSeverityColor(final int severity) {
-
-    if (severity >= 7) {
-      return HighLightError;
-    }
-    else if (severity >= 3) {
-      return HighLightWarning;
-    }
-    else if (severity >= 0) {
-      return HighLightInfo;
-    }
-    return null;
-  }
 }
